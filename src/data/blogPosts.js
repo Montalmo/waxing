@@ -8,14 +8,14 @@ export const blogPosts = [
       <p class="text-xl leading-relaxed mb-8 font-medium text-secondary/80">Привіт, красуні! 👋 Багато дівчат хвилюються перед першим візитом на депіляцію воском. Це цілком нормально! Як майстер, я знаю, що правильна підготовка — це 50% успіху процедури. Вона не тільки робить процес менш болісним, але й забезпечує ідеальний результат, який триватиме тижнями.</p>
       
       <h2 class="text-3xl font-bold text-primary mt-12 mb-6">1. Довжина волосся — це важливо! 📏</h2>
-      <p class="mb-6">Це найголовніше правило, від якого залежить, чи зможу я взагалі провести процедуру. Ідеальна довжина для першої депіляції після бритви — <strong>5-7 міліметрів</strong>.</p>
+      <p class="mb-6">Це найголовніше правило, від якого залежатиме, чи зможу я провести процедуру максимально якісно. Ідеальна довжина для першої депіляції після бритви — <strong>5-7 міліметрів</strong>.</p>
       <ul class="list-disc pl-6 mb-8 space-y-3">
         <li>Це зазвичай 10-14 днів без бритви.</li>
         <li>Якщо волосся буде коротшим за 3-4 мм, віск просто не зможе його надійно "захопити".</li>
         <li>Якщо волосся занадто довге (більше 1.5 см), процедура може бути трохи чутливішою, але ми завжди можемо акуратно підстригти його перед початком.</li>
       </ul>
 
-      <div class="bg-[#FAF7F2] border-l-4 border-[#C9A227] p-6 my-10 rounded-r-xl">
+      <div class="bg-[#FFF3E0] border-l-4 border-[#C9A227] p-6 my-10 rounded-r-xl shadow-sm">
         <div class="flex items-start gap-4">
           <span class="material-symbols-outlined text-[#C9A227] text-3xl">warning</span>
           <div>
@@ -33,7 +33,7 @@ export const blogPosts = [
         <li>Зменшить ризик появи врослого волосся після процедури.</li>
       </ul>
 
-      <div class="bg-[#F0F7FF] p-6 my-10 rounded-2xl flex items-start gap-4">
+      <div class="bg-[#F0F7FF] p-6 my-10 rounded-2xl flex items-start gap-4 shadow-sm">
         <span class="material-symbols-outlined text-blue-500 text-3xl">lightbulb</span>
         <div>
           <p class="font-bold text-[#2D2D2D] mb-1">Порада від Наталії:</p>
@@ -54,7 +54,7 @@ export const blogPosts = [
       <p class="mb-8">Просто залиште шкіру чистою, а я подбаю про професійний догляд до та після процедури з використанням кращих засобів від ItalWax.</p>
 
       <h2 class="text-3xl font-bold text-primary mt-12 mb-6">5. Позитивний настрій та ваш цикл 🌸</h2>
-      <p class="mb-6">Ваш больовий поріг залежить від багатьох факторів. Найкращий час для депіляції — перша половина циклу (після завершення критичних днів). У цей період процедура переноситься легше.</p>
+      <p class="mb-6">Ваш больовий поріг залежатиме від багатьох факторів. Найкращий час для депіляції — перша половина циклу (після завершення критичних днів). У цей період процедура переноситься легше.</p>
       <p class="mb-10">І головне — не бійтеся! Я працюю максимально делікатно, використовуючи сучасні техніки та преміальні матеріали. Біль триває лише мить, а гладкість — тижнями!</p>
     `,
     featuredImage: {
@@ -70,13 +70,71 @@ export const blogPosts = [
     author: {
       name: "Наталія",
       role: "Майстер воскової депіляції",
-      avatar: "https://lh3.googleusercontent.com/a/ACg8ocL_X_f9f9_f9f9_f9f9_f9f9_f9f9_f9f9_f9f9_f9f9=s96-c"
+      avatar: "src/assets/hero-image.png"
     },
-    relatedPosts: [],
+    relatedPosts: ["dohlyad-pislya-depilyatsiyi", "chi-bolyache-robyty-depilyatsiyu"],
     seo: {
       title: "Як підготуватися до воскової депіляції: поради майстра | WaxButterfly",
       description: "5 простих правил підготовки до депіляції воском. Як відростити волосся, що не робити перед візитом та як зменшити біль. Поради майстра Наталії.",
-      keywords: ["підготовка до депіляції", "воскова депіляція поради", "довжина волосся для воску", "ItalWax підготовка", "депіляція Харків"]
+      keywords: "підготовка до депіляції, воскова депіляція поради, довжина волосся для воску, ItalWax підготовка, депіляція Харків",
+      ogImage: "/images/blog/preparation-og.webp",
+      robots: "index, follow"
+    }
+  },
+  {
+    slug: "dohlyad-pislya-depilyatsiyi",
+    title: "Догляд після депіляції: як зберегти гладкість надовго",
+    category: "Догляд після",
+    excerpt: "Поради, як доглядати за шкірою у перші 48 годин після процедури та як уникнути вростання волосся.",
+    content: "<p>Контент у розробці...</p>",
+    featuredImage: {
+      src: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?q=80&w=2070&auto=format&fit=crop",
+      alt: "догляд після депіляції воском",
+      width: 1200,
+      height: 630
+    },
+    publishedAt: "2025-03-20T10:00:00+02:00",
+    readingTime: 3,
+    views: 215,
+    tags: ["догляд", "поради", "гладкість"],
+    author: {
+      name: "Наталія",
+      role: "Майстер воскової депіляції",
+      avatar: "src/assets/hero-image.png"
+    },
+    relatedPosts: ["yak-pidhotuvatysya-do-voskovoyi-depilyatsiyi"],
+    seo: {
+      title: "Догляд після депіляції: поради майстра | WaxButterfly",
+      description: "Як доглядати за шкірою після візиту до майстра.",
+      keywords: "догляд після воску, регенерація шкіри"
+    }
+  },
+  {
+    slug: "chi-bolyache-robyty-depilyatsiyu",
+    title: "Чи боляче робити депіляцію вперше? Руйнуємо міфи",
+    category: "Міфи та факти",
+    excerpt: "Розбираємося, від чого залежать больові відчуття та як зробити процедуру максимально комфортною.",
+    content: "<p>Контент у розробці...</p>",
+    featuredImage: {
+      src: "https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?q=80&w=2080&auto=format&fit=crop",
+      alt: "біль під час депіляції міфи",
+      width: 1200,
+      height: 630
+    },
+    publishedAt: "2025-03-25T10:00:00+02:00",
+    readingTime: 5,
+    views: 456,
+    tags: ["міфи", "біль", "перший раз"],
+    author: {
+      name: "Наталія",
+      role: "Майстер воскової депіляції",
+      avatar: "src/assets/hero-image.png"
+    },
+    relatedPosts: ["yak-pidhotuvatysya-do-voskovoyi-depilyatsiyi"],
+    seo: {
+      title: "Чи боляче робити депіляцію? | WaxButterfly",
+      description: "Відповіді на найпопулярніші питання про біль.",
+      keywords: "біль депіляція, перший візит"
     }
   }
 ];

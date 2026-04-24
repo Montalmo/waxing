@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -9,7 +9,14 @@ const BlogPost = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [showStickyCTA, setShowStickyCTA] = useState(false);
-  const [isCTAClosed, setIsCTAClosed] = useState(false);
+  const [isCTAClosed, setIsCTAClosed] = useState(() => {
+    const closedTime = localStorage.getItem('cta_closed_time');
+    if (closedTime) {
+      const now = new Date().getTime();
+      return now - parseInt(closedTime) < 24 * 60 * 60 * 1000;
+    }
+    return false;
+  });
 
   const post = blogPosts.find(p => p.slug === slug);
 
@@ -30,8 +37,41 @@ const BlogPost = () => {
     // Update SEO
     if (post.seo) {
       document.title = post.seo.title;
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) metaDesc.setAttribute('content', post.seo.description);
+      
+      // Update/Create meta tags
+      const updateMeta = (name, content) => {
+        let meta = document.querySelector(`meta[name="${name}"]`) || document.querySelector(`meta[property="${name}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          if (name.startsWith('og:')) meta.setAttribute('property', name);
+          else meta.setAttribute('name', name);
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+      };
+
+      updateMeta('description', post.seo.description);
+      if (post.seo.keywords) updateMeta('keywords', post.seo.keywords);
+      if (post.seo.robots) updateMeta('robots', post.seo.robots);
+      
+      // OG Tags
+      updateMeta('og:title', post.seo.title);
+      updateMeta('og:description', post.seo.description);
+      updateMeta('og:image', post.featuredImage.src);
+      updateMeta('og:url', window.location.href);
+      updateMeta('og:type', 'article');
+      
+      // Twitter
+      updateMeta('twitter:card', 'summary_large_image');
+      
+      // Canonical
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute('href', `https://waxbutterfly.com.ua/blog/${post.slug}`);
     }
 
     // Inject Schema.org JSON-LD
@@ -47,6 +87,7 @@ const BlogPost = () => {
       "author": {
         "@type": "Person",
         "name": post.author.name,
+        "jobTitle": post.author.role,
         "url": `https://waxbutterfly.com.ua/#pro-majstra`
       },
       "publisher": {
@@ -54,14 +95,13 @@ const BlogPost = () => {
         "name": "WaxButterfly",
         "logo": { "@type": "ImageObject", "url": "https://waxbutterfly.com.ua/logo.webp" }
       },
-      "datePublished": post.publishedAt.split('T')[0],
-      "dateModified": post.publishedAt.split('T')[0],
+      "datePublished": post.publishedAt,
+      "dateModified": post.publishedAt,
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": `https://waxbutterfly.com.ua/blog/${post.slug}`
       },
       "articleSection": post.category,
-      "wordCount": post.content.split(' ').length,
       "timeRequired": `PT${post.readingTime}M`
     };
     schemaScript.text = JSON.stringify(schemaData);
@@ -91,15 +131,6 @@ const BlogPost = () => {
       });
     }
 
-    // Check if CTA was closed in the last 24h
-    const closedTime = localStorage.getItem('cta_closed_time');
-    if (closedTime) {
-      const now = new Date().getTime();
-      if (now - parseInt(closedTime) < 24 * 60 * 60 * 1000) {
-        setIsCTAClosed(true);
-      }
-    }
-
     // Scroll listener for sticky CTA
     const handleScroll = () => {
       const scrolled = window.scrollY;
@@ -121,6 +152,8 @@ const BlogPost = () => {
       if (existingScript) existingScript.remove();
     };
   }, [slug, post, navigate, isCTAClosed]);
+
+  const relatedPostsData = post ? blogPosts.filter(p => post.relatedPosts?.includes(p.slug)) : [];
 
   if (!post) return null;
 
@@ -155,12 +188,14 @@ const BlogPost = () => {
               <span className="opacity-30">/</span>
               <Link to="/blog" className="hover:text-primary transition-colors">Блог</Link>
               <span className="opacity-30">/</span>
-              <span className="text-secondary/60">{post.category}</span>
+              <Link to={`/blog?category=${post.category}`} className="hover:text-primary transition-colors">{post.category}</Link>
+              <span className="opacity-30">/</span>
+              <span className="text-secondary/60 truncate max-w-[200px]">{post.title}</span>
             </nav>
 
             <div className="flex flex-col gap-6">
               <div>
-                <span className="inline-block px-3 py-1 bg-[#E8D5C4] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest rounded-full">
+                <span className="inline-block px-4 py-1 bg-[#E8D5C4] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest rounded-full">
                   🏷️ {post.category}
                 </span>
               </div>
@@ -171,10 +206,13 @@ const BlogPost = () => {
 
               <div className="flex flex-wrap items-center gap-y-4 gap-x-6 text-[14px] text-secondary/60">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/10">
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-primary/10 border border-white shadow-sm">
                     <img src={post.author.avatar} alt={post.author.name} className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-secondary">{post.author.name}</span>
+                  <div className="flex flex-col">
+                    <span className="font-bold text-[#1A1A1A] leading-tight">{post.author.name}</span>
+                    <span className="text-[10px] uppercase tracking-wider">{post.author.role}</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-[18px]">calendar_today</span>
@@ -193,21 +231,37 @@ const BlogPost = () => {
           </div>
 
           {/* Featured Image */}
-          <div className="w-full aspect-[21/9] max-h-[600px] rounded-[24px] overflow-hidden mb-16 shadow-xl">
+          <div className="max-w-[1000px] mx-auto w-full aspect-[21/9] max-h-[600px] rounded-[32px] overflow-hidden mb-16 shadow-2xl border border-white">
             <img 
               src={post.featuredImage.src} 
               alt={post.featuredImage.alt} 
               loading="lazy"
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000" 
             />
           </div>
 
           {/* Content Body */}
           <div className="max-w-[720px] mx-auto">
             <div 
-              className="prose-custom text-[#2D2D2D] text-[18px] leading-[1.7] mb-20"
+              className="prose-custom text-[#2D2D2D] text-[18px] leading-[1.8] mb-20"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+
+            {/* Internal Navigation Grid (2x2) */}
+            <div className="grid grid-cols-2 gap-4 mb-16">
+              {[
+                { title: 'Наші послуги', icon: 'auto_awesome', link: '/#services', desc: 'Ціни та опис' },
+                { title: 'Відгуки', icon: 'forum', link: '/#reviews', desc: 'Що кажуть клієнти' },
+                { title: 'Наступна стаття', icon: 'article', link: '/blog', desc: 'Читайте більше' },
+                { title: 'Питання та відповіді', icon: 'help', link: '/#faq', desc: 'FAQ' }
+              ].map((item, i) => (
+                <Link key={i} to={item.link} className="p-6 bg-white border border-slate-100 rounded-2xl hover:shadow-xl hover:-translate-y-1 transition-all group">
+                  <span className="material-symbols-outlined text-primary mb-3 block group-hover:scale-110 transition-transform">{item.icon}</span>
+                  <h4 className="font-bold text-primary text-sm mb-1">{item.title}</h4>
+                  <p className="text-[11px] text-secondary/60 uppercase tracking-widest font-bold">{item.desc}</p>
+                </Link>
+              ))}
+            </div>
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-12 pt-8 border-t border-[#E8D5C4]/40">
@@ -216,7 +270,7 @@ const BlogPost = () => {
                   key={tag} 
                   to={`/blog?tag=${tag}`}
                   onClick={() => console.log('Analytics Event: tag_click', { tag, slug: post.slug })}
-                  className="px-4 py-2 bg-[#FAF7F2] text-secondary/60 text-[13px] font-bold uppercase tracking-widest rounded-lg hover:bg-primary/10 hover:text-primary transition-all"
+                  className="px-4 py-2 bg-white text-secondary/60 text-[13px] font-bold uppercase tracking-widest rounded-lg border border-slate-100 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all"
                 >
                   #{tag}
                 </Link>
@@ -225,17 +279,17 @@ const BlogPost = () => {
 
             {/* Sharing */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 py-8 border-y border-[#E8D5C4]/40 mb-16">
-              <span className="font-bold text-secondary/40 uppercase tracking-widest text-xs">Поділитися статтею:</span>
+              <span className="font-bold text-secondary/40 uppercase tracking-widest text-[10px]">Поділитися статтею:</span>
               <div className="flex gap-4">
                 {[
                   { id: 'telegram', icon: 'send', color: '#229ED9', label: 'Telegram' },
+                  { id: 'viber', icon: 'chat', color: '#7360F2', label: 'Viber' },
                   { id: 'facebook', icon: 'facebook', color: '#1877F2', label: 'Facebook' },
                   { id: 'share', icon: 'link', color: '#C9A227', label: 'Копіювати' }
                 ].map((item) => (
                   <button 
                     key={item.id}
-                    className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-sm hover:shadow-lg hover:scale-110 transition-all group"
-                    style={{ '--brand-color': item.color }}
+                    className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-sm hover:shadow-lg hover:scale-110 transition-all group border border-slate-50"
                     onClick={() => {
                       console.log('Analytics Event: share_click', { platform: item.id, slug: post.slug });
                       if (item.id === 'share') {
@@ -243,13 +297,15 @@ const BlogPost = () => {
                         alert('Посилання скопійовано!');
                       } else if (item.id === 'telegram') {
                         window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`, '_blank');
+                      } else if (item.id === 'viber') {
+                        window.open(`viber://forward?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`, '_blank');
                       } else if (item.id === 'facebook') {
                         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
                       }
                     }}
                   >
                     <span 
-                      className="material-symbols-outlined transition-colors"
+                      className="material-symbols-outlined transition-colors text-[22px]"
                       style={{ color: item.color }}
                     >
                       {item.icon}
@@ -259,9 +315,34 @@ const BlogPost = () => {
               </div>
             </div>
 
+            {/* Related Posts */}
+            {relatedPostsData.length > 0 && (
+              <div className="mb-20">
+                <h3 className="font-display-lg text-2xl text-primary mb-8 font-semibold">Вам також буде корисно:</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 overflow-x-auto pb-4 sm:overflow-visible">
+                  {relatedPostsData.slice(0, 2).map((related) => (
+                    <Link 
+                      key={related.slug} 
+                      to={`/blog/${related.slug}`}
+                      className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100"
+                    >
+                      <div className="aspect-video overflow-hidden">
+                        <img src={related.featuredImage.src} alt={related.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      </div>
+                      <div className="p-6">
+                        <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-2 block">{related.category}</span>
+                        <h4 className="font-bold text-secondary text-lg group-hover:text-primary transition-colors leading-snug line-clamp-2">
+                          {related.title}
+                        </h4>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Post CTA */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] rounded-[32px] p-10 md:p-16 mb-20 shadow-2xl text-center">
-              {/* Decorative elements */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-[#1A1A1A] to-[#2D2D2D] rounded-[40px] p-10 md:p-16 mb-20 shadow-2xl text-center border border-white/5">
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A227]/10 blur-[80px] -mr-32 -mt-32"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 blur-[80px] -ml-32 -mb-32"></div>
               
@@ -271,7 +352,7 @@ const BlogPost = () => {
                   <span className="text-[#C9A227]">гладкості шкіри?</span>
                 </h2>
                 
-                <p className="text-white/70 text-lg mb-12">
+                <p className="text-white/70 text-lg mb-12 leading-relaxed">
                   Запишіться на процедуру прямо зараз та відчуйте всі переваги професійної депіляції воском від Наталії.
                 </p>
                 
@@ -284,8 +365,6 @@ const BlogPost = () => {
                   <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </Link>
               </div>
-
-              {/* Subtle texture/pattern overlay */}
               <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             </div>
           </div>
@@ -334,6 +413,10 @@ const BlogPost = () => {
         .prose-custom blockquote {
           font-style: italic;
           font-weight: 500;
+        }
+        .prose-custom p:first-of-type {
+          font-size: 1.125rem;
+          line-height: 1.8;
         }
       `}} />
     </div>

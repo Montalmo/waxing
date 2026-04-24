@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SectionHeading from './SectionHeading';
 
@@ -64,26 +64,50 @@ const Reviews = () => {
     <section className="py-xl bg-surface overflow-hidden" id="reviews">
       <div className="max-w-7xl mx-auto px-8">
         <div className="flex justify-between items-end mb-12">
-          <SectionHeading
-            align="left"
-            className="mb-0"
-            description="Ті, хто вже довірили свою красу Наталії"
-          >
-            Відгуки
-          </SectionHeading>
-          <div className="hidden md:flex gap-4">
-            <button
-              onClick={prev}
-              className="w-14 h-14 rounded-full border border-outline-variant hover:bg-white transition-all group active:scale-90 flex items-center justify-center"
+          <div className="flex flex-col gap-4">
+            <SectionHeading
+              align="left"
+              className="mb-0"
+              description="Ті, хто вже довірили свою красу Наталії"
             >
-              <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">chevron_left</span>
-            </button>
-            <button
-              onClick={next}
-              className="w-14 h-14 rounded-full border border-outline-variant hover:bg-white transition-all group active:scale-90 flex items-center justify-center"
-            >
-              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
-            </button>
+              Відгуки
+            </SectionHeading>
+            <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm self-start px-5 py-3 rounded-2xl border border-primary/10 shadow-sm">
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <span className="font-display-lg font-bold text-primary text-2xl">5.0</span>
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <span key={s} className="material-symbols-outlined text-yellow-400 text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-[11px] text-secondary font-bold uppercase tracking-widest">
+                  Всього {reviews.length} {reviews.length === 1 ? 'відгук' : reviews.length < 5 ? 'відгуки' : 'відгуків'} від клієнтів
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-2 text-secondary/40 font-bold tracking-widest text-[10px] uppercase">
+              <span className="text-primary text-sm">{currentIndex + 1}</span>
+              <span className="text-xs">/</span>
+              <span>{reviews.length}</span>
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={prev}
+                className="w-14 h-14 rounded-full border border-outline-variant hover:bg-white transition-all group active:scale-90 flex items-center justify-center"
+              >
+                <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">chevron_left</span>
+              </button>
+              <button
+                onClick={next}
+                className="w-14 h-14 rounded-full border border-outline-variant hover:bg-white transition-all group active:scale-90 flex items-center justify-center"
+              >
+                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -125,13 +149,20 @@ const Reviews = () => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="flex md:hidden justify-center gap-8 mt-12">
-            <button onClick={prev} className="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center">
-              <span className="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button onClick={next} className="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center">
-              <span className="material-symbols-outlined">chevron_right</span>
-            </button>
+          <div className="flex md:hidden flex-col items-center gap-6 mt-12">
+            <div className="flex items-center gap-2 text-secondary/40 font-bold tracking-widest text-[10px] uppercase">
+              <span className="text-primary text-sm">{currentIndex + 1}</span>
+              <span className="text-xs">/</span>
+              <span>{reviews.length}</span>
+            </div>
+            <div className="flex justify-center gap-8">
+              <button onClick={prev} className="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center">
+                <span className="material-symbols-outlined">chevron_left</span>
+              </button>
+              <button onClick={next} className="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center">
+                <span className="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

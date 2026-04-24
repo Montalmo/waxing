@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const Hero = () => {
   return (
@@ -7,9 +7,9 @@ const Hero = () => {
         <img
           className="w-full h-full object-cover"
           alt="Macro shot of molten beauty wax"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCApaZKx54QaTLv1LpTZstN0RJmokVZfPX5AcH0e6iixdHakWrcwNP36inFqwkfrOLTyMcSNPNM_9agGCDP8fucVLK-3OEKR5Uz93bI1UaKPSfOA9aNf1AzUdQq4VOdjU-C3iBCLNjrq8nrdgifrqyjiyInoqpBhI-I-ckaEw5KRP5nvykUgF2hptN7XVJO_bj1-Qlj6o6VOZknu5IIWCbqc_IhNY854eNHu3YXSzjh5aKVbpx-K0B1yAKAwfPyAx5stC8yuW5LsgW2"
+          src="src/assets/hero-image.png"
         />
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
       <div className="relative z-10 max-w-5xl mx-auto px-8 text-center">
         <h1 className="font-display-lg text-4xl md:text-6xl text-white mb-6 font-bold uppercase tracking-wider leading-tight">

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Navbar from './Navbar';
 import Hero from './Hero';
 import About from './About';
@@ -12,7 +12,7 @@ import Booking from './Booking';
 import Footer from './Footer';
 
 const Home = () => {
-  const [selectedService, setSelectedService] = React.useState(null);
+  const [selectedService, setSelectedService] = useState(null);
 
   const handleSelectService = (service) => {
     setSelectedService(service);
@@ -34,7 +34,7 @@ const Home = () => {
         <Reviews />
         <Blog />
         <FAQ />
-        <Booking selectedService={selectedService} />
+        <Booking selectedService={selectedService} onServiceSelect={setSelectedService} />
       </main>
       <Footer />
     </div>

@@ -1,16 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const ServiceSelect = ({ selectedService }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState('Оберіть послугу');
+const ServiceSelect = ({ selectedService, onSelect }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-  React.useEffect(() => {
-    if (selectedService) {
-      setSelected(selectedService);
-    }
-  }, [selectedService]);
+  const displayValue = selectedService || 'Оберіть послугу';
+  const isPlaceholder = !selectedService;
 
   const complexes = [
     'Complex S (Глибоке бікіні + Пахви)',
@@ -31,14 +27,19 @@ const ServiceSelect = ({ selectedService }) => {
     'Ноги повністю'
   ];
 
+  const handleSelect = (item) => {
+    onSelect(item);
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative">
       <div 
         onClick={() => setIsOpen(!isOpen)}
         className="w-full bg-surface-container-low border border-transparent hover:border-outline-variant/50 rounded-lg p-4 flex justify-between items-center cursor-pointer transition-all duration-300 hover:bg-white shadow-sm"
       >
-        <span className={selected === 'Оберіть послугу' ? 'text-secondary/60' : 'text-primary font-medium'}>
-          {selected}
+        <span className={isPlaceholder ? 'text-secondary/60' : 'text-primary font-medium'}>
+          {displayValue}
         </span>
         <motion.span 
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -60,7 +61,7 @@ const ServiceSelect = ({ selectedService }) => {
             {complexes.map((item) => (
               <div
                 key={item}
-                onClick={() => { setSelected(item); setIsOpen(false); }}
+                onClick={() => handleSelect(item)}
                 className="px-4 py-3 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors text-body-md text-primary"
               >
                 {item}
@@ -70,7 +71,7 @@ const ServiceSelect = ({ selectedService }) => {
             {zones.map((item) => (
               <div
                 key={item}
-                onClick={() => { setSelected(item); setIsOpen(false); }}
+                onClick={() => handleSelect(item)}
                 className="px-4 py-3 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors text-body-md text-primary"
               >
                 {item}
@@ -83,7 +84,7 @@ const ServiceSelect = ({ selectedService }) => {
   );
 };
 
-const Booking = ({ selectedService }) => {
+const Booking = ({ selectedService, onServiceSelect }) => {
   return (
     <section className="py-xl bg-white" id="booking">
       <div className="max-w-7xl mx-auto px-8">
@@ -136,7 +137,7 @@ const Booking = ({ selectedService }) => {
               </div>
               <div className="space-y-2">
                 <label className="text-label-sm uppercase tracking-wider text-secondary">Послуга</label>
-                <ServiceSelect selectedService={selectedService} />
+                <ServiceSelect selectedService={selectedService} onSelect={onServiceSelect} />
               </div>
               <div className="flex items-start gap-3 mt-4">
                 <input

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import SectionHeading from './SectionHeading';
 import whiteBox from '../assets/white-box.png';

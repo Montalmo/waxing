@@ -1,9 +1,8 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/wax_h_log.svg';
 
 const Navbar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const handleNavClick = (e, id) => {
     if (location.pathname === '/') {

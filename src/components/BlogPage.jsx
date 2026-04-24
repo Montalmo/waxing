@@ -1,9 +1,22 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { blogPosts } from '../data/blogPosts';
+
+const articles = blogPosts.map((post, index) => ({
+  id: index + 1,
+  slug: post.slug,
+  category: post.category,
+  title: post.title,
+  excerpt: post.excerpt,
+  img: post.featuredImage.src,
+  date: new Date(post.publishedAt).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' }),
+  readingTime: `${post.readingTime} хв`,
+  views: post.views,
+  tags: post.tags
+}));
 
 const BlogPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,20 +31,6 @@ const BlogPage = () => {
   }, []);
 
   const categories = ['Усі', 'Підготовка', 'Догляд після', 'Міфи та факти', 'Ціни та акції', 'Новини студії'];
-
-  const articles = blogPosts.map((post, index) => ({
-    id: index + 1,
-    slug: post.slug,
-    category: post.category,
-    title: post.title,
-    excerpt: post.excerpt,
-    img: post.featuredImage.src,
-    date: new Date(post.publishedAt).toLocaleDateString('uk-UA', { day: 'numeric', month: 'short', year: 'numeric' }),
-    readingTime: `${post.readingTime} хв`,
-    views: post.views,
-    tags: post.tags
-  }));
-
 
   const filteredArticles = useMemo(() => {
     return articles.filter(article => {
@@ -117,7 +116,7 @@ const BlogPage = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
-            {filteredArticles.map((article, index) => (
+            {filteredArticles.map((article) => (
               <motion.article
                 key={article.id}
                 layout
