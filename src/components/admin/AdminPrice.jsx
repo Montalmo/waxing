@@ -71,7 +71,7 @@ const AdminPrice = () => {
       <div className="flex gap-2 p-2 bg-white rounded-2xl border border-primary/5 w-fit shadow-sm">
         {[{ key: 'zones', label: 'Окремі зони' }, { key: 'complexes', label: 'Комплекси' }].map(tab => (
           <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-            className={`px-8 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === tab.key ? 'bg-primary text-white shadow-lg' : 'text-secondary/40 hover:text-primary'}`}>
+            className={`px-4 md:px-8 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === tab.key ? 'bg-primary text-white shadow-lg' : 'text-secondary/40 hover:text-primary'}`}>
             {tab.label}
           </button>
         ))}
@@ -79,12 +79,12 @@ const AdminPrice = () => {
 
       {activeTab === 'zones' && (
         <div className="bg-white rounded-[40px] border border-primary/5 overflow-hidden shadow-sm">
-          <div className="px-8 py-5 border-b border-primary/5">
+          <div className="px-4 md:px-8 py-5 border-b border-primary/5">
             <p className="text-sm font-bold text-secondary/40 uppercase tracking-widest">{services.filter(s => s.active).length} / {services.length} активних зон</p>
           </div>
           <div className="divide-y divide-primary/5">
             {services.map(s => (
-              <div key={s.id} className={`px-8 py-5 flex items-center gap-4 group transition-colors ${!s.active ? 'opacity-40' : 'hover:bg-[#FAF7F2]/50'}`}>
+              <div key={s.id} className={`px-4 md:px-8 py-5 flex items-center gap-4 group transition-colors ${!s.active ? 'opacity-40' : 'hover:bg-[#FAF7F2]/50'}`}>
                 <Toggle checked={s.active} onChange={() => toggleActive(s.id)} />
                 {editingId === s.id ? (
                   <div className="flex-1 flex flex-wrap items-center gap-3">

@@ -47,7 +47,7 @@ const BlogPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-[#FAF7F2] to-[#E8D5C4]/30 px-8">
+      <section className="pt-32 pb-20 bg-gradient-to-b from-[#FAF7F2] to-[#E8D5C4]/30 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <nav className="flex items-center gap-2 mb-8 text-sm font-medium text-secondary/50">
             <Link to="/" className="hover:text-primary transition-colors">Головна</Link>
@@ -93,7 +93,7 @@ const BlogPage = () => {
       </section>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-8 py-16">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-16">
         {/* Categories */}
         <div className="flex items-center gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
           <span className="text-sm font-bold uppercase tracking-widest text-secondary/40 whitespace-nowrap">Категорії:</span>
@@ -178,7 +178,7 @@ const BlogPage = () => {
             <p className="text-secondary mb-8">Спробуйте змінити запит або обрати іншу категорію</p>
             <button
               onClick={() => { setSearchQuery(''); setActiveCategory('Усі'); }}
-              className="px-8 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-all shadow-lg"
+              className="px-4 md:px-8 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-all shadow-lg"
             >
               Скинути всі фільтри
             </button>

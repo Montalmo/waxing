@@ -11,9 +11,9 @@ const Benefits = () => {
 
   return (
     <section className="py-xl bg-surface-container">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <h2 className="sr-only">Переваги</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-8">
           {items.map((item, index) => (
             <div key={index} className="bg-white p-8 rounded-xl text-center flex flex-col items-center shadow-sm">
               <span className="material-symbols-outlined text-4xl mb-4 text-primary">{item.icon}</span>

@@ -56,7 +56,7 @@ const FAQ = () => {
 
   return (
     <section className="py-xl bg-surface">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <SectionHeading className="mb-16">Питання та відповіді</SectionHeading>
         <div className="space-y-1 max-w-[760px] mx-auto">
           {faqs.map((faq, index) => (

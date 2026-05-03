@@ -15,7 +15,7 @@ const Privacy = () => {
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
-      <main className="max-w-4xl mx-auto px-8 py-20 md:py-32">
+      <main className="max-w-4xl mx-auto px-4 md:px-8 py-20 md:py-32">
         <nav className="flex items-center gap-2 mb-8 text-sm font-medium text-secondary/50">
           <Link to="/" className="hover:text-primary transition-colors group">
             <span>Головна</span>

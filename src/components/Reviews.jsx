@@ -62,9 +62,9 @@ const Reviews = () => {
 
   return (
     <section className="py-xl bg-surface overflow-hidden" id="reviews">
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="flex justify-between items-end mb-12">
-          <div className="flex flex-col gap-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-10 md:mb-12">
+          <div className="flex flex-col gap-4 w-full md:w-auto">
             <SectionHeading
               align="left"
               className="mb-0"
@@ -72,18 +72,18 @@ const Reviews = () => {
             >
               Відгуки
             </SectionHeading>
-            <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm self-start px-5 py-3 rounded-2xl border border-primary/10 shadow-sm">
+            <div className="flex items-center gap-3 bg-white/50 backdrop-blur-sm self-start px-4 md:px-5 py-2 md:py-3 rounded-2xl border border-primary/10 shadow-sm">
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="font-display-lg font-bold text-primary text-2xl">5.0</span>
+                  <span className="font-display-lg font-bold text-primary text-xl md:text-2xl">5.0</span>
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((s) => (
-                      <span key={s} className="material-symbols-outlined text-yellow-400 text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                      <span key={s} className="material-symbols-outlined text-yellow-400 text-[16px] md:text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                     ))}
                   </div>
                 </div>
-                <p className="text-[11px] text-secondary font-bold uppercase tracking-widest">
-                  Всього {reviews.length} {reviews.length === 1 ? 'відгук' : reviews.length < 5 ? 'відгуки' : 'відгуків'} від клієнтів
+                <p className="text-[10px] md:text-[11px] text-secondary font-bold uppercase tracking-widest">
+                  Всього {reviews.length} відгуків клієнтів
                 </p>
               </div>
             </div>

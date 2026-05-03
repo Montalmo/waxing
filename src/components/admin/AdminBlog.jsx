@@ -44,7 +44,7 @@ const AdminBlog = () => {
         </div>
         <button 
           onClick={handleCreate}
-          className="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-xl shadow-primary/20 hover:bg-[#A67C00] transition-all"
+          className="flex items-center gap-3 px-4 md:px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-xl shadow-primary/20 hover:bg-[#A67C00] transition-all"
         >
           <span className="material-symbols-outlined">add</span>
           <span>Нова стаття</span>
@@ -63,17 +63,17 @@ const AdminBlog = () => {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-primary/5">
-                    <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Стаття</th>
-                    <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Категорія</th>
-                    <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Статус</th>
-                    <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Перегляди</th>
-                    <th className="px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Дії</th>
+                    <th className="px-4 md:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Стаття</th>
+                    <th className="px-4 md:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Категорія</th>
+                    <th className="px-4 md:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Статус</th>
+                    <th className="px-4 md:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Перегляди</th>
+                    <th className="px-4 md:px-8 py-6 text-[10px] uppercase font-bold tracking-[0.2em] text-secondary/30">Дії</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-primary/5">
                   {posts.map((post) => (
                     <tr key={post.slug} className="group hover:bg-[#FAF7F2]/50 transition-colors">
-                      <td className="px-8 py-6">
+                      <td className="px-4 md:px-8 py-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#FAF7F2] shrink-0 border border-white">
                             <img src={post.featuredImage.src} alt="" className="w-full h-full object-cover" />
@@ -84,19 +84,19 @@ const AdminBlog = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 md:px-8 py-6">
                         <span className="px-3 py-1 bg-[#E8D5C4] text-[#1A1A1A] text-[10px] font-bold uppercase tracking-widest rounded-full whitespace-nowrap">
                           {post.category}
                         </span>
                       </td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 md:px-8 py-6">
                         <div className="flex items-center gap-2">
                            <div className="w-2 h-2 rounded-full bg-green-500"></div>
                            <span className="text-xs font-bold text-secondary">Опубліковано</span>
                         </div>
                       </td>
-                      <td className="px-8 py-6 font-bold text-secondary">{post.views}</td>
-                      <td className="px-8 py-6">
+                      <td className="px-4 md:px-8 py-6 font-bold text-secondary">{post.views}</td>
+                      <td className="px-4 md:px-8 py-6">
                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
                           <button 
                             onClick={() => handleEdit(post)}
@@ -139,7 +139,7 @@ const AdminBlog = () => {
                  <button className="px-6 py-3 bg-white border border-primary/10 text-secondary/60 rounded-xl font-bold hover:bg-[#FAF7F2] transition-all">
                    Чернетка
                  </button>
-                 <button className="px-8 py-3 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">
+                 <button className="px-4 md:px-8 py-3 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">
                    Опублікувати
                  </button>
                </div>

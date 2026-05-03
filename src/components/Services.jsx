@@ -51,39 +51,39 @@ const Services = ({ onSelectService }) => {
 
   return (
     <section className="py-xl bg-white" id="services">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <SectionHeading className="mb-10" description="Оберіть свою ідеальну процедуру або вигідний комплекс">
           Послуги
         </SectionHeading>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
           {complexes.map((item, index) => (
             <div
               key={index}
               className={`${item.primary
-                ? 'bg-primary text-on-primary scale-105 z-10'
+                ? 'bg-primary text-on-primary md:scale-105 z-10'
                 : 'bg-surface-container-low border border-transparent'
-                } p-10 rounded-2xl hover:shadow-xl transition-all duration-500 flex flex-col group`}
+                } p-6 md:p-10 rounded-2xl hover:shadow-xl transition-all duration-500 flex flex-col group`}
             >
-              <div className="w-[120px] h-[120px] mb-8 overflow-hidden rounded-xl mx-auto">
+              <div className="w-[80px] h-[80px] md:w-[120px] md:h-[120px] mb-6 md:mb-8 overflow-hidden rounded-xl mx-auto">
                 <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
               </div>
               <div className="flex justify-between items-start mb-3">
                 <h3 className="font-headline-md text-headline-md">{item.name}</h3>
-                <span className={`${item.primary ? 'bg-white text-primary' : 'bg-primary text-on-primary'} px-3 py-1 rounded text-xs`}>
+                <span className={`${item.primary ? 'bg-white text-primary' : 'bg-primary text-on-primary'} px-3 py-1 rounded text-[10px]`}>
                   {item.tag}
                 </span>
               </div>
-              <ul className={`space-y-1 mb-10 ${item.primary ? 'opacity-80' : 'text-secondary'}`}>
+              <ul className={`space-y-1 mb-8 md:mb-10 text-sm md:text-body-md ${item.primary ? 'opacity-80' : 'text-secondary'}`}>
                 {item.items.map((sub, i) => (
                   <li key={i}>• {sub}</li>
                 ))}
               </ul>
               <div className="mt-auto">
-                <p className={`text-display-lg font-bold mb-4 leading-none ${item.primary ? '' : 'text-primary'}`}>{item.price}</p>
+                <p className={`text-headline-lg font-bold mb-4 leading-none ${item.primary ? '' : 'text-primary'}`}>{item.price}</p>
                 <button
-                  onClick={() => onSelectService(item.fullName)}
-                  className={`w-full py-4 rounded-lg font-bold transition-all ${item.primary ? 'bg-white text-primary hover:opacity-90' : 'border border-primary text-primary hover:bg-primary hover:text-on-primary'
+                   onClick={() => onSelectService(item.fullName)}
+                   className={`w-full py-3 md:py-4 rounded-lg font-bold text-sm md:text-body-md transition-all ${item.primary ? 'bg-white text-primary hover:opacity-90' : 'border border-primary text-primary hover:bg-primary hover:text-on-primary'
                     }`}
                 >
                   Забронювати

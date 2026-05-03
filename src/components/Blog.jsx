@@ -25,7 +25,7 @@ const Blog = () => {
 
   return (
     <section className="py-xl bg-white" id="tips">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <SectionHeading align="left" className="mb-16">Блог</SectionHeading>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {articles.map((article, index) => (
@@ -48,7 +48,7 @@ const Blog = () => {
         <div className="mt-16 text-center">
           <Link 
             to="/blog" 
-            className="inline-flex items-center gap-2 px-8 py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-on-primary transition-all group"
+            className="inline-flex items-center gap-2 px-4 md:px-8 py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-on-primary transition-all group"
           >
             Усі статті
             <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>

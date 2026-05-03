@@ -108,7 +108,7 @@ const AdminSettings = () => {
           <Field label="Широта (Lat)" value={contacts.mapLat} onChange={v => setContacts(p => ({...p, mapLat: v}))} placeholder="49.9935" />
           <Field label="Довгота (Lng)" value={contacts.mapLng} onChange={v => setContacts(p => ({...p, mapLng: v}))} placeholder="36.2304" />
         </div>
-        <button onClick={() => save('Контакти')} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти контакти</button>
+        <button onClick={() => save('Контакти')} className="px-4 md:px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти контакти</button>
       </Section>
 
       {/* Schedule */}
@@ -132,7 +132,7 @@ const AdminSettings = () => {
             </div>
           ))}
         </div>
-        <button onClick={() => save('Графік')} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти графік</button>
+        <button onClick={() => save('Графік')} className="px-4 md:px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти графік</button>
       </Section>
 
       {/* Integrations */}
@@ -146,7 +146,7 @@ const AdminSettings = () => {
           <Field label="Google Analytics ID" value={integrations.gaId} onChange={v => setIntegrations(p => ({...p, gaId: v}))} placeholder="G-XXXXXXXXXX" />
           <Field label="Meta Pixel ID" value={integrations.metaPixelId} onChange={v => setIntegrations(p => ({...p, metaPixelId: v}))} placeholder="XXXXXXXXXXXXXXX" />
         </div>
-        <button onClick={() => save('Інтеграції')} className="px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти токени</button>
+        <button onClick={() => save('Інтеграції')} className="px-4 md:px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#A67C00] transition-all">Зберегти токени</button>
       </Section>
 
       {/* Danger Zone */}

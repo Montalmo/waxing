@@ -179,7 +179,7 @@ const BlogPost = () => {
       />
 
       <main className="pt-32 pb-20">
-        <article className="max-w-[1200px] mx-auto px-6 md:px-8">
+        <article className="max-w-[1200px] mx-auto px-6 md:px-4 md:px-8">
           {/* Hero Section */}
           <div className="max-w-[800px] mx-auto mb-12">
             {/* Breadcrumbs */}

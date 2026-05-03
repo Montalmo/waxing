@@ -15,24 +15,24 @@ const Gallery = () => {
 
   return (
     <section className="py-xl bg-white overflow-hidden" id="gallery">
-      <div className="max-w-7xl mx-auto px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <SectionHeading className="mb-16">Галерея</SectionHeading>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="space-y-4">
-            <img className="w-full rounded-xl object-cover aspect-[3/4]" src={images[0].src} alt="Gallery 1" />
-            <img className="w-full rounded-xl object-cover aspect-square" src={images[1].src} alt="Gallery 2" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="space-y-3 md:space-y-4">
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-[3/4]" src={images[0].src} alt="Gallery 1" />
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-square" src={images[1].src} alt="Gallery 2" />
           </div>
-          <div className="space-y-4 pt-8">
-            <img className="w-full rounded-xl object-cover aspect-square" src={images[2].src} alt="Gallery 3" />
-            <img className="w-full rounded-xl object-cover aspect-[3/4]" src={images[3].src} alt="Gallery 4" />
+          <div className="space-y-3 md:space-y-4 md:pt-8">
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-square" src={images[2].src} alt="Gallery 3" />
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-[3/4]" src={images[3].src} alt="Gallery 4" />
           </div>
-          <div className="space-y-4">
-            <img className="w-full rounded-xl object-cover aspect-[3/4]" src={images[4].src} alt="Gallery 5" />
-            <img className="w-full rounded-xl object-cover aspect-square" src={images[5].src} alt="Gallery 6" />
+          <div className="space-y-3 md:space-y-4">
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-[3/4]" src={images[4].src} alt="Gallery 5" />
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-square" src={images[5].src} alt="Gallery 6" />
           </div>
-          <div className="space-y-4 pt-12">
-            <img className="w-full rounded-xl object-cover aspect-square" src={images[6].src} alt="Gallery 7" />
-            <img className="w-full rounded-xl object-cover aspect-[3/4]" src={images[7].src} alt="Gallery 8" />
+          <div className="space-y-3 md:space-y-4 md:pt-12">
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-square" src={images[6].src} alt="Gallery 7" />
+            <img className="w-full rounded-lg md:rounded-xl object-cover aspect-[3/4]" src={images[7].src} alt="Gallery 8" />
           </div>
         </div>
       </div>

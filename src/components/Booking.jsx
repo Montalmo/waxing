@@ -87,37 +87,37 @@ const ServiceSelect = ({ selectedService, onSelect }) => {
 const Booking = ({ selectedService, onServiceSelect }) => {
   return (
     <section className="py-xl bg-white" id="booking">
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="bg-primary-container rounded-2xl shadow-2xl flex flex-col lg:flex-row relative">
-          <div className="lg:w-1/2 p-12 lg:p-20 text-on-primary rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="bg-primary-container rounded-2xl shadow-2xl flex flex-col lg:flex-row relative overflow-hidden">
+          <div className="lg:w-1/2 p-8 md:p-12 lg:p-20 text-on-primary rounded-t-2xl lg:rounded-t-none lg:rounded-l-2xl">
             <motion.h2 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="font-display-lg text-display-lg font-semibold mb-6 text-white"
+              className="font-display-lg text-headline-lg md:text-display-lg font-semibold mb-4 md:mb-6 text-white"
             >
               Записатися
             </motion.h2>
-            <p className="font-body-lg text-on-primary-container mb-12">
+            <p className="font-body-lg text-on-primary-container mb-8 md:mb-12 text-sm md:text-lg">
               Залиште ваші контакти, і ми зв'яжемося з вами для підтвердження зручного часу.
             </p>
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white">call</span>
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-xl md:text-2xl">call</span>
                 </div>
-                <span className="text-body-lg">+38 (063) 123-45-67</span>
+                <span className="text-base md:text-body-lg">+38 (063) 123-45-67</span>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white">schedule</span>
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-full flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-xl md:text-2xl">schedule</span>
                 </div>
-                <span className="text-body-lg">Пн-Нд: 09:00 - 20:00</span>
+                <span className="text-base md:text-body-lg">Пн-Нд: 09:00 - 20:00</span>
               </div>
             </div>
           </div>
-          <div className="lg:w-1/2 bg-white p-12 lg:p-20 rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl relative">
+          <div className="lg:w-1/2 bg-white p-8 md:p-12 lg:p-20 rounded-b-2xl lg:rounded-b-none lg:rounded-r-2xl relative">
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="space-y-2">
                 <label className="text-label-sm uppercase tracking-wider text-secondary">Ваше ім'я</label>
