@@ -8,6 +8,7 @@ const AdminPrice = () => {
   const [activeTab, setActiveTab] = useState('zones');
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState('');
+  const [editOldPrice, setEditOldPrice] = useState('');
   const [editName, setEditName] = useState('');
   const [toast, setToast] = useState(null);
 
@@ -16,16 +17,30 @@ const AdminPrice = () => {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const startEdit = (id, price, name) => { setEditingId(id); setEditValue(String(price)); setEditName(name); };
+  const startEdit = (id, price, name, oldPrice = '') => { 
+    setEditingId(id); 
+    setEditValue(String(price)); 
+    setEditOldPrice(String(oldPrice));
+    setEditName(name); 
+  };
 
   const saveEdit = (id, isComplex = false) => {
     const newPrice = parseInt(editValue);
+    const newOldPrice = editOldPrice ? parseInt(editOldPrice) : null;
+
     if (isNaN(newPrice) || newPrice < 0) { showToast('Ціна має бути числом ≥ 0', 'warning'); return; }
-    const list = isComplex ? complexes : services;
-    const original = list.find(i => i.id === id);
-    if (original && newPrice < original.price * 0.85) showToast('⚠️ Зниження ціни > 15%! Перевірте.', 'warning');
-    if (isComplex) setComplexes(p => p.map(c => c.id === id ? { ...c, price: newPrice, name: editName } : c));
-    else setServices(p => p.map(s => s.id === id ? { ...s, price: newPrice, name: editName } : s));
+    
+    if (isComplex) {
+      setComplexes(p => p.map(c => c.id === id ? { 
+        ...c, 
+        price: newPrice, 
+        oldPrice: newOldPrice,
+        name: editName 
+      } : c));
+    } else {
+      setServices(p => p.map(s => s.id === id ? { ...s, price: newPrice, name: editName } : s));
+    }
+    
     setEditingId(null);
     showToast('✅ Збережено!');
   };
@@ -119,9 +134,21 @@ const AdminPrice = () => {
               </div>
               {editingId === `c-${c.id}` ? (
                 <div className="space-y-4">
-                  <input value={editName} onChange={e => setEditName(e.target.value)} className="w-full px-4 py-2 bg-[#FAF7F2] rounded-xl outline-none border border-primary/20 font-bold" />
-                  <div className="flex gap-2"><input type="number" value={editValue} onChange={e => setEditValue(e.target.value)} className="flex-1 px-4 py-2 bg-[#FAF7F2] rounded-xl outline-none border border-primary/20 font-bold" /><span className="self-center font-bold text-secondary/40">₴</span></div>
-                  <div className="flex gap-2">
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold text-secondary/40 uppercase">Назва комплексу</label>
+                    <input value={editName} onChange={e => setEditName(e.target.value)} className="w-full px-4 py-2 bg-[#FAF7F2] rounded-xl outline-none border border-primary/20 font-bold" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-secondary/40 uppercase">Нова ціна (₴)</label>
+                      <input type="number" value={editValue} onChange={e => setEditValue(e.target.value)} className="w-full px-4 py-2 bg-[#FAF7F2] rounded-xl outline-none border border-primary/20 font-bold" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-secondary/40 uppercase">Стара ціна (₴)</label>
+                      <input type="number" value={editOldPrice} onChange={e => setEditOldPrice(e.target.value)} placeholder="Порожньо" className="w-full px-4 py-2 bg-[#FAF7F2] rounded-xl outline-none border border-primary/20 font-bold" />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 pt-2">
                     <button onClick={() => saveEdit(c.id, true)} className="flex-1 py-3 bg-green-500 text-white rounded-xl font-bold text-sm">Зберегти</button>
                     <button onClick={() => setEditingId(null)} className="px-4 py-3 bg-gray-100 text-secondary/40 rounded-xl font-bold text-sm">Скасувати</button>
                   </div>
@@ -130,9 +157,12 @@ const AdminPrice = () => {
                 <>
                   <h3 className="font-bold text-2xl text-[#1A1A1A] mb-3">{c.name}</h3>
                   <ul className="space-y-1 mb-6 text-sm text-secondary/60">{c.items.map((item, i) => <li key={i} className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0"></span>{item}</li>)}</ul>
-                  <div className="flex justify-between items-center">
-                    <span className="text-3xl font-bold text-primary">{c.price} ₴</span>
-                    <button onClick={() => startEdit(`c-${c.id}`, c.price, c.name)} className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all">
+                  <div className="flex justify-between items-end">
+                    <div className="flex flex-col">
+                      {c.oldPrice && <span className="text-sm font-bold text-secondary/40 line-through leading-none mb-1">{c.oldPrice} ₴</span>}
+                      <span className="text-3xl font-bold text-primary leading-none">{c.price} ₴</span>
+                    </div>
+                    <button onClick={() => startEdit(`c-${c.id}`, c.price, c.name, c.oldPrice)} className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-all">
                       <span className="material-symbols-outlined text-[18px]">edit</span>Редагувати
                     </button>
                   </div>

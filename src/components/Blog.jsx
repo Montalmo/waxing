@@ -1,54 +1,53 @@
 import { Link } from 'react-router-dom';
 import SectionHeading from './SectionHeading';
+import { blogPosts } from '../data/blogPosts';
 
 const Blog = () => {
-  const articles = [
-    {
-      category: 'Догляд',
-      title: 'Як підготувати шкіру до процедури?',
-      text: 'Дізнайтеся 5 простих кроків для ідеального результату депіляції...',
-      img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDbxipCCZ51gWtjob38M_3YFPN-kT4ArvOswtVTczvPt1WLdeWIS2LN37LIQS84jqQ8VmUYgX02F_jAxzHA8oJXY1Lh5JMHrpgyzYuFChBXsOrCeRVTUNjbvthMFRg3DfH8R1HN2mUBhz83or3KoLqjgDFCtT9uZlxwStnE5tYmZHQiMYZDSV_SYU5FOwKC3pJcqnb3PxFqybsISm6kreGlZpKAx5mLtHxY4_pkMCv1MNL96MLUpVPQX7HddcAKzIM6HbUc8Oiqk_XN'
-    },
-    {
-      category: 'Матеріали',
-      title: 'Чому ми обираємо ItalWax?',
-      text: 'Переваги італійського воску для чутливої шкіри та мінімізація болю.',
-      img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAz9TfvG_caYmINRQFfzVJAER73UamsawiIJOvgtfpEe7htamSNzd3KblQ0nGp2a_p_KPx1H_LP991Xg_FrG7mn8FUaCrVBoGB0JBa6Fy3CpLj1Hq9GUJTWgsfdIUgL4xyae42EXkqOb_67uIib0xH4m5XLecsyr2RzdKHlYKpHAHSdoW7WGXen9H4z87bPnUQD56vizOKES7w8KzomztDEd6oimEX1wVnEFfiMi3F3hX1PTHWc9xQpWtXo_t84RO6r8YvKheW0TGpT'
-    },
-    {
-      category: 'Поради',
-      title: 'Догляд після: як зберегти ефект',
-      text: 'Поради від майстра Наталії по догляду вдома для довготривалої гладкості.',
-      img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAi768B4JXSGlbmI2i9J1lYCRZhbaUxnMu76WHUsSvgBSBznuw6qPn5SUHDsPAadMq4mcsxPjF9dEryu7KiK_393RsxNu5ry1zkLqBTNY8pGFS5yYTRs9zFzvglRCi4GSYIfWwkW55XhU1L3zJEciGbU3Lzj6t4y6aWLfwqGvxBqi7FAeFg0UNwK8wgHMLlHNHKEdGBlcK86KEDgouzBR2v-0R4V_E--E_Z3iCnMMZMJxH1zLpR-sCKuiC2g-uzOuvSDw-8zgHdGvH1'
-    }
-  ];
+  // Get latest 3 articles sorted by date
+  const latestArticles = [...blogPosts]
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, 3);
 
   return (
-    <section className="py-xl bg-white" id="tips">
+    <section className="py-12 xs:py-xl bg-white" id="tips">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <SectionHeading align="left" className="mb-16">Блог</SectionHeading>
+        <SectionHeading align="center" className="mb-10 xs:mb-16">Блог</SectionHeading>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {articles.map((article, index) => (
-            <article key={index} className="group cursor-pointer">
-              <div className="aspect-video overflow-hidden rounded-xl mb-6">
-                <img
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  src={article.img}
-                  alt={article.title}
-                />
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-secondary mb-3 block">{article.category}</span>
-              <h3 className="font-headline-md text-headline-md mb-4 group-hover:text-primary transition-colors">
-                {article.title}
-              </h3>
-              <p className="text-secondary text-body-md line-clamp-2">{article.text}</p>
-            </article>
+          {latestArticles.map((article) => (
+            <Link 
+              key={article.slug} 
+              to={`/blog/${article.slug}`}
+              className="group cursor-pointer flex flex-col h-full"
+            >
+              <article className="h-full flex flex-col">
+                <div className="aspect-video overflow-hidden rounded-xl mb-4 xs:mb-6">
+                  <img
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    src={article.featuredImage.src}
+                    alt={article.featuredImage.alt || article.title}
+                  />
+                </div>
+                <span className="text-[10px] xs:text-xs font-bold uppercase tracking-widest text-secondary mb-2 xs:mb-3 block">
+                  {article.category}
+                </span>
+                <h3 className="text-lg xs:text-xl md:text-headline-md font-bold mb-3 xs:mb-4 group-hover:text-primary transition-colors leading-tight line-clamp-2">
+                  {article.title}
+                </h3>
+                <p className="text-secondary text-sm xs:text-base line-clamp-2 opacity-80 mb-6">
+                  {article.excerpt}
+                </p>
+                <div className="mt-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary">
+                  <span>Читати далі</span>
+                  <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
-        <div className="mt-16 text-center">
+        <div className="mt-10 xs:mt-16 text-center">
           <Link 
             to="/blog" 
-            className="inline-flex items-center gap-2 px-4 md:px-8 py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-on-primary transition-all group"
+            className="inline-flex items-center gap-2 px-6 xs:px-8 py-3.5 xs:py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-on-primary transition-all group text-sm xs:text-base"
           >
             Усі статті
             <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
@@ -60,3 +59,4 @@ const Blog = () => {
 };
 
 export default Blog;
+

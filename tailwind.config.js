@@ -90,7 +90,10 @@ export default {
         "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
         "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
         "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
-      }
+      },
+      screens: {
+        'xs': '480px',
+      },
     },
   },
   plugins: [],

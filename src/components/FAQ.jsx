@@ -55,20 +55,20 @@ const FAQ = () => {
   ];
 
   return (
-    <section className="py-xl bg-surface">
+    <section className="py-12 xs:py-xl bg-surface">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <SectionHeading className="mb-16">Питання та відповіді</SectionHeading>
-        <div className="space-y-1 max-w-[760px] mx-auto">
+        <SectionHeading className="mb-10 xs:mb-16">Питання та відповіді</SectionHeading>
+        <div className="space-y-2 max-w-[760px] mx-auto">
           {faqs.map((faq, index) => (
             <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
               <button
                 onClick={() => handleToggle(index)}
-                className="w-full p-6 flex justify-between items-center text-left"
+                className="w-full p-4 xs:p-6 flex justify-between items-center text-left"
               >
-                <h3 className="font-bold text-primary pr-4">{faq.q}</h3>
+                <h3 className="font-bold text-primary pr-4 text-sm xs:text-base leading-snug">{faq.q}</h3>
                 <motion.span 
                   animate={{ rotate: activeIndex === index ? 180 : 0 }}
-                  className="material-symbols-outlined text-secondary"
+                  className="material-symbols-outlined text-secondary text-xl xs:text-2xl"
                 >
                   expand_more
                 </motion.span>
@@ -82,7 +82,7 @@ const FAQ = () => {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >
-                    <div className="pb-6 px-6 text-secondary leading-relaxed border-t border-slate-50 pt-4">
+                    <div className="pb-4 xs:pb-6 px-4 xs:px-6 text-secondary text-sm xs:text-base leading-relaxed border-t border-slate-50 pt-3 xs:pt-4">
                       {faq.a}
                     </div>
                   </motion.div>

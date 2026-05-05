@@ -19,35 +19,27 @@ const articles = blogPosts.map((post, index) => ({
 }));
 
 const BlogPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Усі');
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Focus search input on mount if desktop
-    if (window.innerWidth > 1024) {
-      document.getElementById('blog-search')?.focus();
-    }
   }, []);
 
   const categories = ['Усі', 'Підготовка', 'Догляд після', 'Міфи та факти', 'Ціни та акції', 'Новини студії'];
 
   const filteredArticles = useMemo(() => {
     return articles.filter(article => {
-      const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       const matchesCategory = activeCategory === 'Усі' || article.category === activeCategory;
-      return matchesSearch && matchesCategory;
+      return matchesCategory;
     });
-  }, [searchQuery, activeCategory]);
+  }, [activeCategory]);
 
   return (
     <div className="bg-white min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-[#FAF7F2] to-[#E8D5C4]/30 px-4 md:px-8">
+      <section className="pt-24 pb-10 bg-gradient-to-b from-[#FAF7F2] to-[#E8D5C4]/30 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
           <nav className="flex items-center gap-2 mb-8 text-sm font-medium text-secondary/50">
             <Link to="/" className="hover:text-primary transition-colors">Головна</Link>
@@ -66,34 +58,15 @@ const BlogPage = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
+            className="text-secondary text-lg md:text-xl max-w-2xl mb-0 leading-relaxed"
           >
             Статті, які допоможуть підготуватися, доглядати та отримувати максимум від процедур
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="relative max-w-xl group"
-          >
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-secondary/40 group-focus-within:text-primary transition-colors">
-              search
-            </span>
-            <input
-              id="blog-search"
-              type="text"
-              placeholder="Пошук статей за заголовком або тегами..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all shadow-sm"
-            />
-          </motion.div>
         </div>
       </section>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-16">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-16">
         {/* Categories */}
         <div className="flex items-center gap-4 mb-12 overflow-x-auto pb-4 scrollbar-hide">
           <span className="text-sm font-bold uppercase tracking-widest text-secondary/40 whitespace-nowrap">Категорії:</span>
@@ -175,9 +148,9 @@ const BlogPage = () => {
               <span className="material-symbols-outlined text-4xl text-slate-200">search_off</span>
             </div>
             <h3 className="text-xl font-bold text-primary mb-2">Нічого не знайдено</h3>
-            <p className="text-secondary mb-8">Спробуйте змінити запит або обрати іншу категорію</p>
+            <p className="text-secondary mb-8">Спробуйте обрати іншу категорію</p>
             <button
-              onClick={() => { setSearchQuery(''); setActiveCategory('Усі'); }}
+              onClick={() => { setActiveCategory('Усі'); }}
               className="px-4 md:px-8 py-3 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-all shadow-lg"
             >
               Скинути всі фільтри
